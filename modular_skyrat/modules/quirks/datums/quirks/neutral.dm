@@ -1,3 +1,52 @@
+// SKYRAT ADDITIONAL NEUTRAL QUIRKS
+
+/datum/quirk/hydra
+	name = "Hydra Heads"
+	desc = "You are a tri-headed creature. To use, format name like (Rucks-Sucks-Ducks)"
+	value = 0
+	mob_trait = TRAIT_HYDRA_HEADS
+	gain_text = span_notice("You hear two other voices inside of your head(s).")
+	lose_text = span_danger("All of your minds become singular.")
+	medical_record_text = "There are multiple heads and personalities affixed to one body."
+	icon = "horse-head"
+
+/datum/quirk/hydra/add()
+	var/mob/living/carbon/human/hydra = quirk_holder
+	var/datum/action/innate/hydra/spell = new
+	var/datum/action/innate/hydrareset/resetspell = new
+	spell.Grant(hydra)
+	spell.owner = hydra
+	resetspell.Grant(hydra)
+	resetspell.owner = hydra
+	hydra.name_archive = hydra.real_name
+
+
+/datum/action/innate/hydra
+	name = "Switch head"
+	desc = "Switch between each of the heads on your body."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "art_summon"
+
+/datum/action/innate/hydrareset
+	name = "Reset Speech"
+	desc = "Go back to speaking as a whole."
+	icon_icon = 'icons/mob/actions/actions_minor_antag.dmi'
+	button_icon_state = "art_summon"
+
+/datum/action/innate/hydrareset/Activate()
+	var/mob/living/carbon/human/hydra = owner
+	hydra.real_name = hydra.name_archive
+	hydra.visible_message(span_notice("[hydra.name] pushes all three heads forwards; they seem to be talking as a collective."), \
+							span_notice("You are now talking as [hydra.name_archive]!"), ignored_mobs=owner)
+
+/datum/action/innate/hydra/Activate() //Oops, all hydra!
+	var/mob/living/carbon/human/hydra = owner
+	var/list/names = splittext(hydra.name_archive,"-")
+	var/selhead = input("Who would you like to speak as?","Heads:") in names
+	hydra.real_name = selhead
+	hydra.visible_message(span_notice("[hydra.name] pulls the rest of their heads back; and puts [selhead]'s forward."), \
+							span_notice("You are now talking as [selhead]!"), ignored_mobs=owner)
+
 // AdditionalEmotes *turf quirks
 /datum/quirk/water_aspect
 	name = "Water aspect (Emotes)"
@@ -238,3 +287,141 @@
 
 	var/obj/item/organ/internal/tongue/dog/new_tongue = new(get_turf(human_holder))
 	new_tongue.Insert(human_holder)
+
+/datum/quirk/equipping/lungs
+	abstract_parent_type = /datum/quirk/equipping/lungs
+	var/obj/item/organ/internal/lungs/lungs_holding
+	var/obj/item/organ/internal/lungs/lungs_added
+	var/lungs_typepath = /obj/item/organ/internal/lungs
+	items = list(/obj/item/clothing/accessory/breathing = list(ITEM_SLOT_BACKPACK))
+	var/breath_type = "oxygen"
+
+/datum/quirk/equipping/lungs/add()
+	var/mob/living/carbon/human/carbon_holder = quirk_holder
+	if (!istype(carbon_holder) || !lungs_typepath)
+		return
+	var/current_lungs = carbon_holder.getorganslot(ORGAN_SLOT_LUNGS)
+	if (istype(current_lungs, lungs_typepath))
+		return
+	lungs_holding = current_lungs
+	lungs_holding.organ_flags |= ORGAN_FROZEN
+	lungs_added = new lungs_typepath
+	lungs_added.Insert(carbon_holder)
+	lungs_holding.moveToNullspace()
+
+/datum/quirk/equipping/lungs/remove()
+	var/mob/living/carbon/carbon_holder = quirk_holder
+	if (!istype(carbon_holder) || !lungs_holding)
+		return
+	var/obj/item/organ/internal/lungs/lungs = carbon_holder.getorganslot(ORGAN_SLOT_LUNGS)
+	if (lungs != lungs_added && lungs != lungs_holding)
+		qdel(lungs_holding)
+		return
+	lungs_holding.Insert(carbon_holder, drop_if_replaced = FALSE)
+	lungs_holding.organ_flags &= ~ORGAN_FROZEN
+
+/datum/quirk/equipping/lungs/on_equip_item(obj/item/equipped, success)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	if (!istype(equipped, /obj/item/clothing/accessory/breathing))
+		return
+	var/obj/item/clothing/accessory/breathing/acc = equipped
+	acc.breath_type = breath_type
+	if (acc.can_attach_accessory(human_holder?.w_uniform))
+		acc.attach(human_holder.w_uniform, human_holder)
+
+/datum/quirk/equipping/lungs/nitrogen
+	name = "Nitrogen Breather"
+	desc = "You breathe nitrogen, even if you might not normally breathe it. Oxygen is poisonous."
+	icon = "lungs"
+	medical_record_text = "Patient can only breathe nitrogen."
+	gain_text = "<span class='danger'>You suddenly have a hard time breathing anything but nitrogen."
+	lose_text = "<span class='notice'>You suddenly feel like you aren't bound to nitrogen anymore."
+	value = 0
+	forced_items = list(
+		/obj/item/clothing/mask/breath = list(ITEM_SLOT_MASK),
+		/obj/item/tank/internals/nitrogen/belt/full = list(ITEM_SLOT_HANDS, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET))
+	lungs_typepath = /obj/item/organ/internal/lungs/nitrogen
+	breath_type = "nitrogen"
+
+/datum/quirk/equipping/lungs/nitrogen/on_equip_item(obj/item/equipped, success)
+	. = ..()
+	var/mob/living/carbon/carbon_holder = quirk_holder
+	if (!success || !istype(carbon_holder) || !istype(equipped, /obj/item/tank/internals))
+		return
+	carbon_holder.internal = equipped
+
+/* Before making any changes to Oversized, PLEASE READ the following notes.
+ * Adds a veteran-crew locked perk that makes your sprite much larger with some associated upsides and downsides.
+ *
+ * CODE EMBARGO:
+ * Anything that could be percieved as a balance or feature change directly to the oversized quirk,
+ *  be it code in this module or elsewhere in the code, must be passed by the maintainers prior to PRing, or else your PR risks being closed.
+*/
+
+#define OVERSIZED_SPEED_SLOWDOWN 0.5
+#define OVERSIZED_HUNGER_MOD 1.5
+
+/datum/quirk/oversized
+	name = "Oversized"
+	desc = "You, for whatever reason, are FAR too tall, and will encounter some rough situations because of it."
+	gain_text = span_notice("That airlock looks small...")
+	lose_text = span_notice("Is it still the same size...?") //Lol
+	medical_record_text = "Patient is abnormally tall."
+	value = 0
+	mob_trait = TRAIT_OVERSIZED
+	icon = "expand-arrows-alt"
+	veteran_only = TRUE
+
+/datum/quirk/oversized/add()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.dna.features["body_size"] = 2
+	human_holder.maptext_height = 32 * human_holder.dna.features["body_size"] //Adjust runechat height
+	human_holder.dna.update_body_size()
+	human_holder.mob_size = MOB_SIZE_LARGE
+	var/obj/item/bodypart/arm/left/left_arm = human_holder.get_bodypart(BODY_ZONE_L_ARM)
+	if(left_arm)
+		left_arm.unarmed_damage_low += OVERSIZED_HARM_DAMAGE_BONUS
+		left_arm.unarmed_damage_high += OVERSIZED_HARM_DAMAGE_BONUS
+
+	var/obj/item/bodypart/arm/right/right_arm = human_holder.get_bodypart(BODY_ZONE_R_ARM)
+	if(right_arm)
+		right_arm.unarmed_damage_low += OVERSIZED_HARM_DAMAGE_BONUS
+		right_arm.unarmed_damage_high += OVERSIZED_HARM_DAMAGE_BONUS
+
+	human_holder.blood_volume_normal = BLOOD_VOLUME_OVERSIZED
+	human_holder.physiology.hunger_mod *= OVERSIZED_HUNGER_MOD //50% hungrier
+	var/speed_mod = human_holder.dna.species.speedmod + OVERSIZED_SPEED_SLOWDOWN
+	human_holder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown = speed_mod)
+	var/obj/item/organ/internal/stomach/old_stomach = human_holder.getorganslot(ORGAN_SLOT_STOMACH)
+	if(!(old_stomach.type == /obj/item/organ/internal/stomach))
+		return
+	old_stomach.Remove(human_holder, special = TRUE)
+	qdel(old_stomach)
+	var/obj/item/organ/internal/stomach/oversized/new_stomach = new //YOU LOOK HUGE, THAT MUST MEAN YOU HAVE HUGE GUTS! RIP AND TEAR YOUR HUGE GUTS!
+	new_stomach.Insert(human_holder, special = TRUE)
+	to_chat(human_holder, span_warning("You feel your massive stomach rumble!"))
+
+/datum/quirk/oversized/remove()
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	human_holder.dna.features["body_size"] = human_holder?.client?.prefs ?human_holder?.client?.prefs?.read_preference(/datum/preference/numeric/body_size) : 1
+	human_holder.maptext_height = 32 * human_holder.dna.features["body_size"]
+	human_holder.dna.update_body_size()
+	human_holder.mob_size = MOB_SIZE_HUMAN
+
+	var/obj/item/bodypart/arm/left/left_arm = human_holder.get_bodypart(BODY_ZONE_L_ARM)
+	if(left_arm)
+		left_arm.unarmed_damage_low -= OVERSIZED_HARM_DAMAGE_BONUS
+		left_arm.unarmed_damage_high -= OVERSIZED_HARM_DAMAGE_BONUS
+
+	var/obj/item/bodypart/arm/right/right_arm = human_holder.get_bodypart(BODY_ZONE_R_ARM)
+	if(right_arm)
+		right_arm.unarmed_damage_low -= OVERSIZED_HARM_DAMAGE_BONUS
+		right_arm.unarmed_damage_high -= OVERSIZED_HARM_DAMAGE_BONUS
+
+	human_holder.blood_volume_normal = BLOOD_VOLUME_NORMAL
+	human_holder.physiology.hunger_mod /= OVERSIZED_HUNGER_MOD
+	var/speedmod = human_holder.dna.species.speedmod
+	human_holder.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/species, multiplicative_slowdown=speedmod)
+
+#undef OVERSIZED_HUNGER_MOD
+#undef OVERSIZED_SPEED_SLOWDOWN

@@ -1,12 +1,4 @@
-// Override of Freerunning quirk which updates the icon.
-/datum/quirk/freerunning
-	icon = "person-through-window"
-
-// Override of Light Step quirk which updates the icon.
-/datum/quirk/light_step
-	icon = "person-arrow-down-to-line"
-
-// SKYRAT GOOD TRAITS
+// SKYRAT ADDITIONAL GOOD QUIRKS
 
 /datum/quirk/hard_soles
 	name = "Hardened Soles"

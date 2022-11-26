@@ -1,4 +1,4 @@
-// SKYRAT NEGATIVE TRAITS
+// SKYRAT ADDITIONAL NEGATIVE QUIRKS
 
 /datum/quirk/alexithymia
 	name = "Alexithymia"
@@ -7,6 +7,16 @@
 	mob_trait = TRAIT_MOOD_NOEXAMINE
 	medical_record_text = "Patient is incapable of communicating their emotions."
 	icon = "question-circle"
+
+/datum/quirk/ashwalkertalons
+	name = "Chunky Fingers"
+	desc = "Your digits are thick and tough and unable to use modular computers including tablets, certain devices like laser pointers, and non-adapted firearms."
+	gain_text = span_notice("Your fingers feel thicker and slightly less dextrous. You expect you'll have a difficult time using computers, certain small devices and firearms.")
+	lose_text = span_notice("Your digits feel lithe and capable once more.")
+	medical_record_text = "Patient's digits are thick and lack the dexterity for operating some small devices, computers and non-adapted firearms."
+	value = -8
+	mob_trait = TRAIT_CHUNKYFINGERS
+	icon = "hand-middle-finger"
 
 /datum/quirk/fragile
 	name = "Fragility"
@@ -56,15 +66,29 @@
 	var/mob/living/carbon/human/user = quirk_holder
 	user?.cure_trauma_type(/datum/brain_trauma/severe/monophobia, TRAUMA_RESILIENCE_ABSOLUTE)
 
-/datum/quirk/ashwalkertalons
-	name = "Chunky Fingers"
-	desc = "Your digits are thick and tough and unable to use modular computers including tablets, certain devices like laser pointers, and non-adapted firearms."
-	gain_text = span_notice("Your fingers feel thicker and slightly less dextrous. You expect you'll have a difficult time using computers, certain small devices and firearms.")
-	lose_text = span_notice("Your digits feel lithe and capable once more.")
-	medical_record_text = "Patient's digits are thick and lack the dexterity for operating some small devices, computers and non-adapted firearms."
-	value = -8
-	mob_trait = TRAIT_CHUNKYFINGERS
-	icon = "hand-middle-finger"
+/datum/quirk/equipping/nerve_staple
+	name = "Nerve Stapled"
+	desc = "You're a pacifist. Not because you want to be, but because of the device stapled into your eye."
+	value = -10 // pacifism = -8, losing eye slots = -2
+	gain_text = span_danger("You suddenly can't raise a hand to hurt others!")
+	lose_text = span_notice("You think you can defend yourself again.")
+	medical_record_text = "Patient is nerve stapled and is unable to harm others."
+	icon = "hand-peace"
+	forced_items = list(/obj/item/clothing/glasses/nerve_staple = list(ITEM_SLOT_EYES))
+	/// The nerve staple attached to the quirk
+	var/obj/item/clothing/glasses/nerve_staple/staple
+
+/datum/quirk/equipping/nerve_staple/on_equip_item(obj/item/equipped, successful)
+	if (!istype(equipped, /obj/item/clothing/glasses/nerve_staple))
+		return
+	staple = equipped
+
+/datum/quirk/equipping/nerve_staple/remove()
+	. = ..()
+	if (!staple || staple != quirk_holder.get_item_by_slot(ITEM_SLOT_EYES))
+		return
+	to_chat(quirk_holder, span_warning("The nerve staple suddenly falls off your face and melts[istype(quirk_holder.loc, /turf/open/floor) ? " on the floor" : ""]!"))
+	qdel(staple)
 
 /datum/quirk/no_guns
 	name = "No Guns"
@@ -75,3 +99,19 @@
 	value = -4
 	mob_trait = TRAIT_NOGUNS
 	icon = "none"
+
+/datum/quirk/bad_hearing
+	name = "Bad Hearing"
+	desc = "Your hearing is moderately impaired. Far-away sounds are muffled, and you can barely hear whispers"
+	icon = "ear-listen"
+	value = -2
+	gain_text = "<span class='danger'>Everything sounds muffled.</span>"
+	lose_text = "<span class='notice'>You can hear clearly!</span>"
+	medical_record_text = "Patient has moderate hearing loss."
+	hardcore_value = 1
+
+/datum/quirk/bad_hearing/add()
+	quirk_holder.AddComponent(/datum/component/bad_hearing)
+
+/datum/quirk/bad_hearing/remove()
+	qdel(quirk_holder.GetComponent(/datum/component/bad_hearing))

@@ -1,3 +1,4 @@
+// Modified airlocks for Oversized Quirk
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
 	var/static/list/loc_connections = list(
@@ -5,6 +6,7 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
+// Causes you to bang your head on the top of the airlock. Ouch!
 /obj/machinery/door/airlock/proc/on_entered(datum/source, atom/movable/crossed_atom)
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(crossed_atom, TRAIT_OVERSIZED) && ishuman(crossed_atom))
