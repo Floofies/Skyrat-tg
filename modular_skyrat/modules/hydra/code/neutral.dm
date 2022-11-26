@@ -1,3 +1,4 @@
+#define TRAIT_HYDRA_HEADS "hydrahead"
 /datum/quirk/hydra
 	name = "Hydra Heads"
 	desc = "You are a tri-headed creature. To use, format name like (Rucks-Sucks-Ducks)"
