@@ -1,18 +1,18 @@
 # Skyrat-tg Quirk Additions Module
 
-This module is the receptacle for adding new quirks (and their dependencies) which don't directly override the pre-existing TG Quirks.
+This module is the receptacle for adding new Quirks (and their dependencies) which don't directly override the pre-existing TG Quirks.
 
-If you want to override a stock TG quirk or one of it's vars/procs/behaviors, see the (Skyrat-tg Quirk Override Module)[/]
+If you want to override a stock TG quirk or one of it's vars/procs/behaviors, see the (Skyrat-tg Quirk Overrides Module)[/modular_skyrat/master_files/code/modules/quirks/README.md]
 
 ## Guide to Adding Quirks on Skyrat-tg
 
 This module should contain any additional Quirks, and their unique dependencies such as new icons and components, which are completely seperate from TG quirks.
 
-Your added Quirk should NOT distribute it's added dependencies across the folders of other modules or exist anywhere in `master_files`. Please implement your changes inside this module as much as possible. If some stock TG behavior/implementation is to be overridden, please use the (Skyrat-tg Quirk Override Module)[/]
+Your added Quirk should NOT distribute it's added dependencies across the folders of other modules or exist anywhere in `master_files`. Please implement your changes inside this module as much as possible. If some stock TG behavior/implementation is to be overridden, please use the (Skyrat-tg Quirk Overrides Module)[/modular_skyrat/master_files/code/modules/quirks/README.md]
 
 ### Job Blacklisting
 
-If your added Quirk provides a significant mechanical disadvantage to the player, you should blacklist it from jobs which that player would not be able to perform at an ample proficiency.
+If your added Quirk provides a significant mechanical disadvantage to the player, you should blacklist it from Security/Command jobs which that player would not be able to perform at an ample proficiency.
 
 The defines for the Skyrat-tg Quirk-Job blacklist are located within the file `code/DEFINES/~skyrat_defines/jobs.dm`
 
