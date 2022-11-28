@@ -1,4 +1,4 @@
-/// Breathing Dogtag for the Nitrogen Breather Quirk
+/// Breathing Dogtag for lungs-based equipping Quirks, such as Nitrogen Breather
 /obj/item/clothing/accessory/breathing
 	name = "breathing dogtag"
 	desc = "Dogtag that lists what you breathe."

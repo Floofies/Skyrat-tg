@@ -23,6 +23,15 @@
 #define TRAIT_PERSONALSPACE "personalspace" // Block/counter-attack ass-slaps
 #define TRAIT_SENSITIVESNOUT "sensitive_snout" // Snout hurts when booped
 
+/// Traits gained by lewd Quirks, cannot be removed unless the quirk itself is gone
+#define LEWDQUIRK_TRAIT "lewdquirks"
+	#define TRAIT_MASOCHISM "masochism"
+	#define TRAIT_SADISM "sadism"
+	#define TRAIT_NEVERBONER "neverboner"
+	#define TRAIT_BIMBO "bimbo"
+	#define TRAIT_RIGGER "rigger"
+	#define TRAIT_ROPEBUNNY "rope bunny"
+
 // AdditionalEmotes *turf traits added by Quirks
 #define TRAIT_WATER_ASPECT "water_aspect"
 #define TRAIT_WEBBING_ASPECT "webbing_aspect"

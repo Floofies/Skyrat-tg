@@ -1,6 +1,6 @@
 # Skyrat-tg Quirk Overrides Module
 
-This module is the receptacle for overriding pre-existing TG Quirks.
+This module is the receptacle for overrides of pre-existing TG Quirks.
 
 If you want to override a stock TG quirk or one of it's vars/procs/behaviors, this is the module to use.
 
