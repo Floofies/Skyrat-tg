@@ -13,7 +13,7 @@ If you want to override a stock TG quirk or one of it's vars/procs/behaviors, se
 
 This module should contain any additional Quirks, and their unique dependencies such as new icons and components, which are completely seperate from TG quirks.
 
-Your added Quirk should NOT distribute it's added dependencies across the folders of other modules or exist anywhere in `master_files`. Please implement your changes inside this module as much as possible. If some stock TG behavior/implementation is to be overridden, please use the (Skyrat-tg Quirk Overrides Module)[/modular_skyrat/master_files/code/modules/quirks/README.md]
+Your added Quirk should NOT distribute it's added dependencies across the folders of other modules or exist anywhere in `master_files`. Please implement your changes inside this module as much as possible. If some stock TG behavior/implementation is to be overridden, please use the [Skyrat-tg Quirk Overrides Module](/modular_skyrat/master_files/code/modules/quirks/README.md)
 
 ### Quirk Balancing
 
