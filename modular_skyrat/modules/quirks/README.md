@@ -2,7 +2,7 @@
 
 This module is the receptacle for adding new Quirks (and their dependencies) which don't directly override the pre-existing TG Quirks.
 
-If you want to override a stock TG quirk or one of it's vars/procs/behaviors, see the (Skyrat-tg Quirk Overrides Module)[/modular_skyrat/master_files/code/modules/quirks/README.md]
+If you want to override a stock TG quirk or one of it's vars/procs/behaviors, see the [Skyrat-tg Quirk Overrides Module](/modular_skyrat/master_files/code/modules/quirks/README.md)
 
 ### Policy Guidelines
 - **All Quirks** must be explicitly balanced to provide *minimal-at-best* advantages.
