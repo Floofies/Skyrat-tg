@@ -6225,7 +6225,6 @@
 #include "modular_skyrat\modules\quirks\datums\actions\hydra_heads.dm"
 #include "modular_skyrat\modules\quirks\datums\brain_damage\brain_trauma.dm"
 #include "modular_skyrat\modules\quirks\datums\mood_events\mood_events.dm"
-#include "modular_skyrat\modules\quirks\datums\quirks\_quirk.dm"
 #include "modular_skyrat\modules\quirks\datums\quirks\good.dm"
 #include "modular_skyrat\modules\quirks\datums\quirks\negative.dm"
 #include "modular_skyrat\modules\quirks\datums\quirks\neutral.dm"
