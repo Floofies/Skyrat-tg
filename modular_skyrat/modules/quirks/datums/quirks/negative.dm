@@ -99,19 +99,3 @@
 	value = -4
 	mob_trait = TRAIT_NOGUNS
 	icon = "person-rifle"
-
-/datum/quirk/bad_hearing
-	name = "Bad Hearing"
-	desc = "Your hearing is moderately impaired. Far-away sounds are muffled, and you can barely hear whispers"
-	icon = "ear-listen"
-	value = -2
-	gain_text = "<span class='danger'>Everything sounds muffled.</span>"
-	lose_text = "<span class='notice'>You can hear clearly!</span>"
-	medical_record_text = "Patient has moderate hearing loss."
-	hardcore_value = 1
-
-/datum/quirk/bad_hearing/add()
-	quirk_holder.AddComponent(/datum/component/bad_hearing)
-
-/datum/quirk/bad_hearing/remove()
-	qdel(quirk_holder.GetComponent(/datum/component/bad_hearing))
