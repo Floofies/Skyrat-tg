@@ -39,6 +39,7 @@
 	species_quirk.add_to_holder(new_holder, quirk_transfer)
 	qdel(src)
 
+/// Ensures the given items are ALWAYS equipped, no matter what the circumstances are.
 /datum/quirk/equipping
 	abstract_parent_type = /datum/quirk/equipping
 	/// the items that will be equipped, formatted in the way of [item_path = list of slots it can be equipped to], will not equip over nodrop items
@@ -89,6 +90,7 @@
 /datum/quirk/equipping/proc/on_equip_item(obj/item/equipped, success)
 	return
 
+/// Enables you to add more breathing quirks, so you can breathe in different gases.
 /datum/quirk/equipping/lungs
 	abstract_parent_type = /datum/quirk/equipping/lungs
 	var/obj/item/organ/internal/lungs/lungs_holding
