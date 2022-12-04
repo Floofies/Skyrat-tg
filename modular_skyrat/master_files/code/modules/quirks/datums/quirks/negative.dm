@@ -19,12 +19,11 @@
 	desc = "Your positronic brain is slowly corrupting itself due to a cascading anomaly. Better bring some liquid solder!"
 	gain_text = "<span class='danger'>You feel glitchy.</span>"
 	lose_text = "<span class='notice'>You no longer feel glitchy.</span>"
-	icon = "bp_synth_brain"
 	mail_goodies = list(/obj/item/storage/pill_bottle/liquid_solder/braintumor)
 	hidden_quirk = TRUE
 
 // Override that adds custom flavortext for synthetic brains.
-/datum/quirk/item_quirk/brainproblems/synth/add_to_holder(mob/living/carbon/human/new_holder, quirk_transfer)
+/datum/quirk/item_quirk/brainproblems/synth/add_to_holder(mob/living/carbon/new_holder, quirk_transfer)
 	var/obj/item/organ/internal/brain/synth_brain = new_holder.getorganslot(ORGAN_SLOT_BRAIN)
 	if (istype(synth_brain, /obj/item/organ/internal/brain/ipc_positron/circuit))
 		name = "Processor Firmware Bug"
@@ -60,7 +59,6 @@
 	name = "Hydraulic Leak"
 	desc = "Your body's hydraulic fluids are leaking through their seals."
 	medical_record_text = "Patient requires regular treatment for hydraulic fluid loss."
-	icon = "bd_synth_tint"
 	mail_goodies = list(/obj/item/reagent_containers/blood/oil)
 	hidden_quirk = TRUE
 

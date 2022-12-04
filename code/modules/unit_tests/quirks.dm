@@ -8,6 +8,11 @@
 		if (initial(quirk_type.abstract_parent_type) == quirk_type)
 			continue
 
+		// SKYRAT EDIT BEGIN - Hidden quirks are never placed into the GUI.
+		if (quirk_type.hidden_quirk)
+			continue
+		// SKYRAT EDIT END
+
 		var/icon = initial(quirk_type.icon)
 
 		if (isnull(icon))
