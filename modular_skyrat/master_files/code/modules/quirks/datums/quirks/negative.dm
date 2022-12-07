@@ -4,31 +4,35 @@
 /datum/quirk/pushover
 	icon = "people-pulling"
 
+/*
+ * BRAIN DEGENERATION / BRAIN TUMOR QUIRK
+*/
+
 // Re-labels TG brainproblems to be more generic. There never was a tumor anyways!
 // Includes species-specific quirks for synthetic species.
 /datum/quirk/item_quirk/brainproblems
 	name = "Brain Degeneration"
 	desc = "You have a lethal condition in your brain that is slowly destroying it. Better bring some mannitol!"
 	medical_record_text = "Patient has a lethal condition in their brain that is slowly causing brain death."
-	species_quirks = list( /datum/species/robotic = /datum/quirk/item_quirk/brainproblems/synth )
+	species_quirks = list(/datum/species/robotic = /datum/quirk/item_quirk/brainproblems/synth)
 
 // Override of Brain Tumor quirk for robotic/synthetic species with synthetic brains.
 // Does not appear in TGUI or the character preferences window.
 /datum/quirk/item_quirk/brainproblems/synth
-	name = "Positronic Cascade Anomaly"
-	desc = "Your positronic brain is slowly corrupting itself due to a cascading anomaly. Better bring some liquid solder!"
 	gain_text = "<span class='danger'>You feel glitchy.</span>"
 	lose_text = "<span class='notice'>You no longer feel glitchy.</span>"
 	mail_goodies = list(/obj/item/storage/pill_bottle/liquid_solder/braintumor)
 	hidden_quirk = TRUE
 
-// Override that adds custom flavortext for synthetic brains.
-/datum/quirk/item_quirk/brainproblems/synth/add_to_holder(mob/living/carbon/new_holder, quirk_transfer)
-	var/obj/item/organ/internal/brain/synth_brain = new_holder.getorganslot(ORGAN_SLOT_BRAIN)
+// Adds custom medical flavortext for synthetic brains.
+/datum/quirk/item_quirk/brainproblems/synth/add()
+	var/obj/item/organ/internal/brain/synth_brain = quirk_holder.getorganslot(ORGAN_SLOT_BRAIN)
 	if (istype(synth_brain, /obj/item/organ/internal/brain/ipc_positron/circuit))
 		name = "Processor Firmware Bug"
 	else if (istype(synth_brain, /obj/item/organ/internal/brain/ipc_positron/mmi))
 		name = "Interface Rejection Syndrome"
+	else
+		name = "Positronic Cascade Anomaly"
 
 	medical_record_text = "Patient has a malfunction in their [synth_brain] that is slowly causing brain death."
 	..()
@@ -46,9 +50,13 @@
 		flavour_text = "These will keep you alive until you can secure a supply of medication. Don't rely on them too much!",
 	)
 
+/*
+ * BLOOD DEFICIENCY QUIRK
+*/
+
 // Override which includes species-specific quirks for jelly and synthetic species.
 /datum/quirk/blooddeficiency
-	species_quirks = list (
+	species_quirks = list(
 		/datum/species/robotic = /datum/quirk/blooddeficiency/synth,
 		/datum/species/jelly = /datum/quirk/blooddeficiency/jelly
 	)
@@ -72,6 +80,7 @@
 	hidden_quirk = TRUE
 
 // Omits the NOBLOOD check for jelly/slime species.
+// There is a better way to do this, in the species itself.
 /datum/quirk/blooddeficiency/jelly/process(delta_time)
 	if(quirk_holder.stat == DEAD)
 		return
