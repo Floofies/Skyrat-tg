@@ -631,7 +631,7 @@
 	/// our current intent, so we can go back to it after touching
 	var/previous_combat_mode = combat_mode
 	set_combat_mode(FALSE)
-	INVOKE_ASYNC(examined_thing, /atom/proc/attack_hand, src)
+	INVOKE_ASYNC(examined_thing, TYPE_PROC_REF(/atom, attack_hand), src)
 	set_combat_mode(previous_combat_mode)
 	return TRUE
 
@@ -1113,8 +1113,8 @@
 					break
 				search_id = 0
 
-		else if( search_pda && istype(A, /obj/item/modular_computer/tablet/pda) )
-			var/obj/item/modular_computer/tablet/pda/PDA = A
+		else if( search_pda && istype(A, /obj/item/modular_computer/pda) )
+			var/obj/item/modular_computer/pda/PDA = A
 			if(PDA.saved_identification == oldname)
 				PDA.saved_identification = newname
 				PDA.UpdateDisplay()
