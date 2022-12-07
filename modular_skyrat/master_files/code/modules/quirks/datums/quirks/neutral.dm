@@ -1,4 +1,4 @@
-// SKYRAT-TG OVERRIDING NEUTRAL QUIRKS
+// SKYRAT-TG NEUTRAL QUIRK OVERRIDES
 
 // Go away foreigner, we have you in code in a different way already.
 /datum/quirk/foreigner

@@ -1,11 +1,11 @@
-// SKYRAT-TG OVERRIDING NEGATIVE QUIRKS
+// SKYRAT-TG NEGATIVE QUIRK OVERRIDES
 
 // Override of Pushover quirk which changes the icon.
 /datum/quirk/pushover
 	icon = "people-pulling"
 
 /*
- * BRAIN DEGENERATION / BRAIN TUMOR QUIRK
+ * BRAIN DEGENERATION / BRAIN TUMOR QUIRK OVERRIDES
 */
 
 // Re-labels TG brainproblems to be more generic. There never was a tumor anyways!
@@ -51,7 +51,7 @@
 	)
 
 /*
- * BLOOD DEFICIENCY QUIRK
+ * BLOOD DEFICIENCY QUIRK OVERRIDES
 */
 
 // Override which includes species-specific quirks for jelly and synthetic species.

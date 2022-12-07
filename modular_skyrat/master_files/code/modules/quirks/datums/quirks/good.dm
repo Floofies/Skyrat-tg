@@ -1,4 +1,4 @@
-// SKYRAT-TG OVERRIDING GOOD QUIRKS
+// SKYRAT-TG GOOD QUIRK OVERRIDES
 
 // Override of Freerunning quirk which updates the icon.
 /datum/quirk/freerunning
@@ -8,7 +8,7 @@
 /datum/quirk/light_step
 	icon = "person-arrow-down-to-line"
 
-// Override of Signer quirk with an adjusted value appropriate for Skyrat balance.
+// Override of Signer quirk with an adjusted value.
 // The stock TG quirk is valued at 4 points.
 /datum/quirk/item_quirk/signer
 	value = 2
