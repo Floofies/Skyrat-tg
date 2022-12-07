@@ -34,7 +34,7 @@
 	else
 		name = "Positronic Cascade Anomaly"
 
-	medical_record_text = "Patient has a malfunction in their [synth_brain] that is slowly causing brain death."
+	medical_record_text = "Patient has a malfunction in their [synth_brain.name] that is slowly causing brain death."
 	..()
 
 // Synthetics get liquid_solder with Brain Tumor instead of mannitol.

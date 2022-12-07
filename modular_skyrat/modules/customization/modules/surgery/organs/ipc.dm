@@ -1,5 +1,5 @@
 /obj/item/organ/internal/brain/ipc_positron
-	name = "positronic brain carcass"
+	name = "positronic brain"
 	slot = ORGAN_SLOT_BRAIN
 	zone = BODY_ZONE_CHEST
 	status = ORGAN_ROBOTIC
