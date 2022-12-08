@@ -67,10 +67,10 @@
 	if(amount > 0)
 		take_overall_damage(amount, 0, 0, updating_health, required_status)
 	else
-		heal_overall_damage(abs(amount), 0, 0, required_status ? required_status : BODYTYPE_ORGANIC, updating_health)
+		heal_overall_damage(abs(amount), 0, 0, required_status, updating_health)
 	return amount
 
-/mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/carbon/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	var/current = getBruteLoss()
 	var/diff = amount - current
 	if(!diff)
@@ -83,10 +83,10 @@
 	if(amount > 0)
 		take_overall_damage(0, amount, 0, updating_health, required_status)
 	else
-		heal_overall_damage(0, abs(amount), 0, required_status ? required_status : BODYTYPE_ORGANIC, updating_health)
+		heal_overall_damage(0, abs(amount), 0, required_status, updating_health)
 	return amount
 
-/mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/carbon/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	var/current = getFireLoss()
 	var/diff = amount - current
 	if(!diff)

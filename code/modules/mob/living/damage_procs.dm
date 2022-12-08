@@ -165,7 +165,7 @@
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
-/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
+/mob/living/proc/adjustBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status = BODYTYPE_ORGANIC)
 	SEND_SIGNAL(src, COMSIG_MOB_LOSS_BRUTE, amount) //SKYRAT EDIT ADDITION
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
@@ -174,7 +174,7 @@
 		updatehealth()
 	return amount
 
-/mob/living/proc/setBruteLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/proc/setBruteLoss(amount, updating_health = TRUE, forced = FALSE, required_status = BODYTYPE_ORGANIC)
 	if(!forced && (status_flags & GODMODE))
 		return
 	. = bruteloss
@@ -227,7 +227,7 @@
 /mob/living/proc/getFireLoss()
 	return fireloss
 
-/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/proc/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status = BODYTYPE_ORGANIC)
 	SEND_SIGNAL(src, COMSIG_MOB_LOSS_FIRE, amount) //SKYRAT EDIT ADDITION
 	if(!forced && (status_flags & GODMODE))
 		return FALSE
@@ -236,7 +236,7 @@
 		updatehealth()
 	return amount
 
-/mob/living/proc/setFireLoss(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/proc/setFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status = BODYTYPE_ORGANIC)
 	if(!forced && (status_flags & GODMODE))
 		return
 	. = fireloss

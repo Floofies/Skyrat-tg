@@ -182,8 +182,8 @@
 		patient_brain.traumas = trauma_list
 
 	//Re-Applies Damage
-	patient.adjustBruteLoss(brute_damage)
-	patient.adjustFireLoss(burn_damage)
+	patient.adjustBruteLoss(brute_damage, required_status = FALSE)
+	patient.adjustFireLoss(burn_damage, required_status = FALSE)
 
 	open_machine()
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 100, FALSE)
