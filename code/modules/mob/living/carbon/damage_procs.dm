@@ -24,13 +24,13 @@
 				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					update_damage_overlays()
 			else //no bodypart, we deal damage with a more general method.
-				adjustBruteLoss(damage_amount, forced = forced)
+				adjustBruteLoss(damage_amount, forced = forced, required_status = FALSE)
 		if(BURN)
 			if(BP)
 				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
 					update_damage_overlays()
 			else
-				adjustFireLoss(damage_amount, forced = forced)
+				adjustFireLoss(damage_amount, forced = forced, required_status = FALSE)
 		if(TOX)
 			adjustToxLoss(damage_amount, forced = forced)
 		if(OXY)
