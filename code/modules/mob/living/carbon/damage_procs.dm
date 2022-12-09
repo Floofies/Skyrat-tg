@@ -75,7 +75,7 @@
 	var/diff = amount - current
 	if(!diff)
 		return
-	adjustBruteLoss(diff, updating_health, forced)
+	adjustBruteLoss(diff, updating_health, forced, required_status)
 
 /mob/living/carbon/adjustFireLoss(amount, updating_health = TRUE, forced = FALSE, required_status)
 	if(!forced && (status_flags & GODMODE))
@@ -91,7 +91,7 @@
 	var/diff = amount - current
 	if(!diff)
 		return
-	adjustFireLoss(diff, updating_health, forced)
+	adjustFireLoss(diff, updating_health, forced, required_status)
 
 /mob/living/carbon/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE)
 	if(!forced && HAS_TRAIT(src, TRAIT_TOXINLOVER)) //damage becomes healing and healing becomes damage
