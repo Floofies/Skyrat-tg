@@ -1,24 +1,3 @@
-/datum/quirk/hydra
-	name = "Hydra Heads"
-	desc = "You are a tri-headed creature. To use, format name like (Rucks-Sucks-Ducks)"
-	value = 0
-	mob_trait = TRAIT_HYDRA_HEADS
-	gain_text = span_notice("You hear two other voices inside of your head(s).")
-	lose_text = span_danger("All of your minds become singular.")
-	medical_record_text = "There are multiple heads and personalities affixed to one body."
-	icon = "horse-head"
-
-/datum/quirk/hydra/add()
-	var/mob/living/carbon/human/hydra = quirk_holder
-	var/datum/action/innate/hydra/spell = new
-	var/datum/action/innate/hydrareset/resetspell = new
-	spell.Grant(hydra)
-	spell.owner = hydra
-	resetspell.Grant(hydra)
-	resetspell.owner = hydra
-	hydra.name_archive = hydra.real_name
-
-
 /datum/action/innate/hydra
 	name = "Switch head"
 	desc = "Switch between each of the heads on your body."

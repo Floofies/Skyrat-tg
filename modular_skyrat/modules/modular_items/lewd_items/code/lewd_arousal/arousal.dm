@@ -20,3 +20,29 @@
 
 	arousal = clamp(arousal + arous, AROUSAL_MINIMUM, AROUSAL_LIMIT)
 
+/*
+* Lewd Examine for the Empath Quirk
+* TODO: Convert this to a Component and use Signals instead of directly overriding.
+*/
+
+/mob/living/carbon/human/examine(mob/user)
+	. = ..()
+	var/mob/living/examiner = user
+	if(stat >= DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH) || src == examiner || !HAS_TRAIT(examiner, TRAIT_EMPATH))
+		return
+
+	if(examiner.client?.prefs?.read_preference(/datum/preference/toggle/erp))
+		var/arousal_message
+		switch(arousal)
+			if(AROUSAL_MINIMUM_DETECTABLE to AROUSAL_LOW)
+				arousal_message = span_purple("[p_they()] [p_are()] slightly blushed.") + "\n"
+			if(AROUSAL_LOW to AROUSAL_MEDIUM)
+				arousal_message = span_purple("[p_they()] [p_are()] quite aroused and seems to be stirring up lewd thoughts in [p_their()] head.") + "\n"
+			if(AROUSAL_HIGH to AROUSAL_AUTO_CLIMAX_THRESHOLD)
+				arousal_message = span_purple("[p_they()] [p_are()] aroused as hell.") + "\n"
+			if(AROUSAL_AUTO_CLIMAX_THRESHOLD to INFINITY)
+				arousal_message = span_purple("[p_they()] [p_are()] extremely excited, exhausting from entolerable desire.") + "\n"
+		if(arousal_message)
+			. += arousal_message
+	else if(arousal > AROUSAL_MINIMUM_DETECTABLE)
+		. += span_purple("[p_they()] [p_are()] slightly blushed.") + "\n"

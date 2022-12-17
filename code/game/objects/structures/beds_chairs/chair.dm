@@ -120,7 +120,7 @@
 	//SKYRAT EDIT ADDITION
 	if(HAS_TRAIT(M, TRAIT_OVERSIZED))
 		visible_message(span_warning("[src] buckles under the weight of [M] causing it to break!"))
-		playsound(src, 'modular_skyrat/modules/oversized/sound/chair_break.ogg', 70, TRUE)
+		playsound(src, 'modular_skyrat/modules/quirks/sound/chair_break.ogg', 70, TRUE)
 		deconstruct()
 	//SKYRAT EDIT END
 /obj/structure/chair/post_unbuckle_mob()

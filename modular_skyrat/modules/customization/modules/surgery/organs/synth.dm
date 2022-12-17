@@ -3,7 +3,7 @@
 #define SYNTH_EMP_BRAIN_DAMAGE_MAXIMUM 75
 
 /obj/item/organ/internal/brain/synth
-	name = "positronic brain carcass"
+	name = "positronic brain"
 	slot = ORGAN_SLOT_BRAIN
 	zone = BODY_ZONE_CHEST
 	status = ORGAN_ROBOTIC
