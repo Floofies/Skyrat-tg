@@ -1,7 +1,12 @@
+/*
+ * Before making any changes to Oversized, PLEASE READ the following notes:
+ *  This is a veteran-crew locked perk that makes your sprite much larger with some associated upsides and downsides.
+ * CODE EMBARGO:
+ *  Any changes must be approved by the maintainers prior to PRing, or else your PR risks being closed.
+*/
+
 #define OVERSIZED_SPEED_SLOWDOWN 0.5
 #define OVERSIZED_HUNGER_MOD 1.5
-
-// Before making any changes to oversized, please see the module's readme.md file
 
 /datum/quirk/oversized
 	name = "Oversized"

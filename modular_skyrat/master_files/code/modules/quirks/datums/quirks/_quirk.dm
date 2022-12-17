@@ -1,3 +1,63 @@
+/datum/quirk
+	/// Is this quirk restricted to veteran players only?
+	var/veteran_only = FALSE
+
+	/// Is this quirk hidden from TGUI / the character preferences window?
+	var/hidden_quirk = FALSE
+
+	/// Is this a quirk disabled by disabling the ERP config?
+	var/erp_quirk = FALSE
+
+	/// A list which associates Species Datums with Quirk Datums.
+	/// Associations are detours to species-specific sub-Quirks which match to a Quirk holder's Species.
+	/// Subtypes should come before parent types.
+	/* Example:
+	 * /datum/quirk/myquirk
+	 *		species_quirks = list(
+	 *			/datum/species/robotic = /datum/quirk/myquirk/robotic,
+	 *			/datum/species/jelly = /datum/quirk/myquirk/jelly
+	 *		)
+	*/
+	var/list/species_quirks
+
+/**
+ * Skyrat override to add the Quirk to a new quirk_holder.
+ *
+ * Detours/swaps to a species-specific sub-Quirk which matches new_holder's Species, via "species_quirks".
+ *
+ * Performs logic to make sure new_holder is a valid holder of this quirk.
+ * Returns FALSEy if there was some kind of error. Returns TRUE otherwise.
+ * Arguments:
+ * * new_holder - The mob to add this quirk to.
+ * * quirk_transfer - If this is being added to the holder as part of a quirk transfer. Quirks can use this to decide not to spawn new items or apply any other one-time effects.
+ */
+/datum/quirk/add_to_holder(mob/living/new_holder, quirk_transfer)
+	if(!species_quirks || !ishuman(new_holder))
+		// No species Quirks, or if mob isn't Human (lacks Species Datum).
+		// Add Quirk as-is.
+		return ..()
+
+	for(var/species_type in species_quirks)
+		// Check Quirk holder's Species against the Species Datums in the list.
+		// Any subclass of the Species can exist in the list.
+		if(!is_species(new_holder, species_type))
+			continue
+
+		// Species Datum successfully matched to Quirk Datum:
+		var/datum/quirk/sub_quirk = species_quirks[species_type]
+		sub_quirk = new sub_quirk()
+		// This null prevents infinite loop/detour, because Sub-Quirks inherit species_quirks.
+		// Setting null here is convenient and removes any need to do it in the subclass.
+		sub_quirk.species_quirks = null
+
+		qdel(src)
+		return sub_quirk.add_to_holder(new_holder, quirk_transfer)
+
+	// No Species Datum matched the Quirk holder's Species Datum.
+	// Add Quirk as-is without detouring.
+	return ..()
+
+/// Ensures the given items are ALWAYS equipped, no matter what the circumstances are.
 /datum/quirk/equipping
 	abstract_parent_type = /datum/quirk/equipping
 	/// the items that will be equipped, formatted in the way of [item_path = list of slots it can be equipped to], will not equip over nodrop items
@@ -48,6 +108,7 @@
 /datum/quirk/equipping/proc/on_equip_item(obj/item/equipped, success)
 	return
 
+/// Enables you to add more breathing quirks, so you can breathe in different gases.
 /datum/quirk/equipping/lungs
 	abstract_parent_type = /datum/quirk/equipping/lungs
 	var/obj/item/organ/internal/lungs/lungs_holding
@@ -88,49 +149,3 @@
 	acc.breath_type = breath_type
 	if (acc.can_attach_accessory(human_holder?.w_uniform))
 		acc.attach(human_holder.w_uniform, human_holder)
-
-/obj/item/clothing/accessory/breathing
-	name = "breathing dogtag"
-	desc = "Dogtag that lists what you breathe."
-	icon_state = "allergy"
-	above_suit = FALSE
-	minimize_when_attached = TRUE
-	attachment_slot = CHEST
-	var/breath_type
-
-/obj/item/clothing/accessory/breathing/examine(mob/user)
-	. = ..()
-	. += "The dogtag reads: I breathe [breath_type]."
-
-/obj/item/clothing/accessory/breathing/on_uniform_equip(obj/item/clothing/under/uniform, user)
-	. = ..()
-	RegisterSignal(uniform, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
-
-/obj/item/clothing/accessory/breathing/on_uniform_dropped(obj/item/clothing/under/uniform, user)
-	. = ..()
-	UnregisterSignal(uniform, COMSIG_PARENT_EXAMINE)
-
-/obj/item/clothing/accessory/breathing/proc/on_examine(datum/source, mob/user, list/examine_list)
-	SIGNAL_HANDLER
-	examine_list += "The dogtag reads: I breathe [breath_type]."
-
-/datum/quirk/equipping/lungs/nitrogen
-	name = "Nitrogen Breather"
-	desc = "You breathe nitrogen, even if you might not normally breathe it. Oxygen is poisonous."
-	icon = "lungs"
-	medical_record_text = "Patient can only breathe nitrogen."
-	gain_text = "<span class='danger'>You suddenly have a hard time breathing anything but nitrogen."
-	lose_text = "<span class='notice'>You suddenly feel like you aren't bound to nitrogen anymore."
-	value = 0
-	forced_items = list(
-		/obj/item/clothing/mask/breath = list(ITEM_SLOT_MASK),
-		/obj/item/tank/internals/nitrogen/belt/full = list(ITEM_SLOT_HANDS, ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET))
-	lungs_typepath = /obj/item/organ/internal/lungs/nitrogen
-	breath_type = "nitrogen"
-
-/datum/quirk/equipping/lungs/nitrogen/on_equip_item(obj/item/equipped, success)
-	. = ..()
-	var/mob/living/carbon/carbon_holder = quirk_holder
-	if (!success || !istype(carbon_holder) || !istype(equipped, /obj/item/tank/internals))
-		return
-	carbon_holder.internal = equipped
