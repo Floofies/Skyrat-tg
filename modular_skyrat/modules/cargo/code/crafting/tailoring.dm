@@ -1,3 +1,18 @@
+// Overrides to prevent the HEMO+ glasses being used in crafting for normal sunglasses.
+/datum/crafting_recipe/hudsunsecremoval
+	blacklist = list(/obj/item/clothing/glasses/hud/security/sunglasses/interdyne)
+
+/datum/crafting_recipe/hudsunmedremoval
+	blacklist = list(/obj/item/clothing/glasses/hud/health/sunglasses/interdyne)
+
+/datum/crafting_recipe/hudsundiagremoval
+	blacklist = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses/interdyne)
+
+/datum/crafting_recipe/scienceglassesremoval
+	blacklist = list(/obj/item/clothing/glasses/sunglasses/chemical/interdyne)
+
+// HUD Addition / Removal for HEMO+ sunglasses
+
 // Security HUD
 /datum/crafting_recipe/hudsunsec/interdyne
 	name = "HEMO+ Security HUDsunglasses"
@@ -37,7 +52,7 @@
 	result = /obj/item/clothing/glasses/sunglasses/interdyne
 	reqs = list(/obj/item/clothing/glasses/hud/diagnostic/sunglasses/interdyne = 1)
 
-// Science & Chemical Scanner HUD
+// Science / Chemical Scanner HUD
 /datum/crafting_recipe/scienceglasses/interdyne
 	name = "HEMO+ Science Glasses"
 	result = /obj/item/clothing/glasses/sunglasses/chemical/interdyne
