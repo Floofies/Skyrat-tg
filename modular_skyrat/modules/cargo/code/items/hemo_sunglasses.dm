@@ -1,8 +1,8 @@
-// For [/datum/supply_pack/goody/sunglasses_red]
-
+// Duplicate flavortext DRYly
 #define HEMO_DESC(detail) "Expensive and ultra-lightweight designer sunglasses, with [detail]blood-red lenses. Tiny engravings indicate high-quality UV-protection and bactericidal coating."
-#define HEMO_ENGRAVING "<br>It has <b><i>[span_red("HEMO+")]</b> by <b>[span_cyan("Interdyne")]</i></b> filigree-engraved onto either side."
+#define HEMO_ENGRAVING "<br><br>It has <b><i>[span_red("HEMO+")]</b> by <b>[span_cyan("Interdyne")]</i></b> filigree-engraved onto either side."
 
+// Dependency of [/datum/supply_pack/goody/sunglasses_red]
 /obj/item/clothing/glasses/sunglasses/interdyne
 	name = "HEMO+ designer sunglasses"
 	icon_state = "sunhudsec"
