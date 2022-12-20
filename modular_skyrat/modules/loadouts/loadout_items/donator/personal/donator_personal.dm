@@ -596,5 +596,5 @@
 /datum/loadout_item/glasses/designer_hemo
 	name = "HEMO+ Security HUDSunglasses"
 	item_path = /obj/item/clothing/glasses/hud/security/sunglasses/interdyne
-	ckeywhitelist = list("INSERT-CKEY-HERE")
+	ckeywhitelist = list("navier")
 	restricted_roles = list(JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER)
