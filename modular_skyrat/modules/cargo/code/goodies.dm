@@ -124,6 +124,6 @@
 // The coolest sunglasses you CAN buy!
 /datum/supply_pack/goody/sunglasses_red
 	name = "Imported \"HEMO+\" Designer Sunglasses"
-	desc = "HEMO+ defies the rules-of-engagment with this ultra-light Titanium frame, designed by Interdyne Pharmaceutics in Tau Ceti. Built for those with a strong taste for excellence and precision. Featuring HUD compatibility, and bactericidal coating. Available in black with R19 red lenses."
+	desc = "HEMO+ defies the rules-of-engagment with this ultra-light Titanium frame, designed by Interdyne Pharmaceutics in Tau Ceti. Built for those with a strong taste for excellence and precision. Featuring HUD compatibility, and bactericidal coating. Available in black with blood-red R19 lenses."
 	cost = PAYCHECK_CREW * 5
 	contains = list(/obj/item/clothing/glasses/sunglasses/interdyne)
