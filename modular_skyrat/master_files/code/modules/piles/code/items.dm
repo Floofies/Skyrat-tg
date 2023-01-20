@@ -12,20 +12,19 @@
 	// Add this item to an existing pile.
 	if(istype(item, /obj/item/pile))
 		var/obj/item/pile/existing_pile = item
-		if(!existing_pile.add_items(src))
+		if(!existing_pile.add_items(user, src))
 			to_chat(user, span_warning("You can't pick up any more of the [name]!"))
-			return
+			return FALSE
 		return TRUE
-
 	// Create a new pile and add this item to it.
-	if(istype(item, /obj/item))
+	if(istype(item, /obj/item) && (item.w_class > PILE_MAX_WEIGHT_CLASS))
 		if(item.w_class > PILE_MAX_WEIGHT_CLASS)
-			return
+			to_chat(user, span_warning("You can't pick up any more of the [name]!"))
+			return FALSE
 		user.temporarilyRemoveItemFromInventory(src, TRUE)
 		var/obj/item/pile/new_pile = new (drop_location())
-		new_pile.add_items(src)
-		new_pile.add_items(item)
-		// Make a pile in our active hand.
+		new_pile.add_items(user, src, update = FALSE)
+		new_pile.add_items(user, item)
 		new_pile.pickup(user)
 		user.put_in_active_hand(new_pile)
 		return TRUE
@@ -54,7 +53,8 @@
 
 // Cigarette
 /obj/item/clothing/mask/cigarette/attackby(obj/item/item, mob/living/user, params)
-	if(!add_to_pile(item, user))
+	// Allow lighters to light the cig up.
+	if(item.get_temperature() || !add_to_pile(item, user))
 		return ..()
 
 // Cigarette Butt
@@ -64,5 +64,6 @@
 
 // Paper
 /obj/item/paper/attackby(obj/item/item, mob/living/user, params)
-	if(!add_to_pile(item, user))
+	// Allow pens to write, and lighters to light the paper on fire.
+	if(istype(item, /obj/item/pen) || item.get_temperature() || !add_to_pile(item, user))
 		return ..()
