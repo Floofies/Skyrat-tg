@@ -19,7 +19,7 @@
 	/// A list of items contained in the pile.
 	var/list/obj/item/pile_items = list()
 	/// A list of /obj/item typepaths allowed by [pile/proc/add_items]
-	var/list/type/whitelisted_items = list(
+	var/list/whitelisted_items = list(
 		/obj/item/ammo_casing,
 		/obj/item/pen,
 		/obj/item/shard,
@@ -29,7 +29,7 @@
 		/obj/item/paper
 	)
 	/// A list of /obj/item typepaths NOT allowed by [pile/proc/add_items]
-	var/list/type/blacklisted_items = list()
+	var/list/blacklisted_items = list()
 
 /obj/item/pile/Destroy()
 	if (!isnull(pile_items))
@@ -167,7 +167,7 @@
 		return
 	if(item_count >= PILE_MAX_ITEMS_LIMIT)
 		return
-	if(!istype(item, /obj/item) || (item.type in blacklisted_items) || !(item.type in allowed_items))
+	if(!istype(item, /obj/item) || (item.type in blacklisted_items) || !(item.type in whitelisted_items))
 		return
 	if(item.w_class > PILE_MAX_WEIGHT_CLASS)
 		return
