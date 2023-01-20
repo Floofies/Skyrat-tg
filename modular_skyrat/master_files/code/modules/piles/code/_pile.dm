@@ -167,7 +167,7 @@
 		return
 	if(item_count >= PILE_MAX_ITEMS_LIMIT)
 		return
-	if(!istype(item, /obj/item) || (item.type in blacklisted_items) || !(item.type in whitelisted_items))
+	if(!istype(item, /obj/item) || is_type_in_list(item.type, blacklisted_items) || !is_type_in_list(item.type, whitelisted_items))
 		return
 	if(item.w_class > PILE_MAX_WEIGHT_CLASS)
 		return
