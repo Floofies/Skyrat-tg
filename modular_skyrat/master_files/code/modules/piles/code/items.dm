@@ -17,7 +17,7 @@
 			return FALSE
 		return TRUE
 	// Create a new pile and add this item to it.
-	if(istype(item, /obj/item) && (item.w_class > PILE_MAX_WEIGHT_CLASS))
+	if(istype(item, /obj/item))
 		if(item.w_class > PILE_MAX_WEIGHT_CLASS)
 			to_chat(user, span_warning("You can't pick up any more of the [name]!"))
 			return FALSE
