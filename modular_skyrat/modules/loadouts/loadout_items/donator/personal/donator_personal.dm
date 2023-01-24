@@ -622,3 +622,9 @@
 	name = "Holocigar"
 	item_path = /obj/item/clothing/mask/holocigarette/masvedishcigar
 	ckeywhitelist = list("masvedish")
+
+/datum/loadout_item/glasses/redglasses
+	name = "Red Security HUDSunglasses"
+	item_path = /obj/item/clothing/glasses/hud/security/sunglasses/redsec
+	ckeywhitelist = list("navier")
+	restricted_roles = list(JOB_HEAD_OF_SECURITY, JOB_WARDEN, JOB_SECURITY_OFFICER)
