@@ -5133,13 +5133,7 @@
 #include "modular_skyrat\master_files\code\datums\id_trim\syndicate.dm"
 #include "modular_skyrat\master_files\code\datums\storage\storage.dm"
 #include "modular_skyrat\master_files\code\datums\storage\subtypes\pockets.dm"
-<<<<<<< HEAD
-=======
-#include "modular_skyrat\master_files\code\datums\traits\good.dm"
-#include "modular_skyrat\master_files\code\datums\traits\negative.dm"
-#include "modular_skyrat\master_files\code\datums\traits\neutral.dm"
 #include "modular_skyrat\master_files\code\datums\votes\_vote_datum.dm"
->>>>>>> upstream/master
 #include "modular_skyrat\master_files\code\game\sound.dm"
 #include "modular_skyrat\master_files\code\game\effects\spawners\random\structure.dm"
 #include "modular_skyrat\master_files\code\game\gamemodes\dynamic.dm"
