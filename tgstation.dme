@@ -5288,7 +5288,6 @@
 #include "modular_skyrat\master_files\code\modules\quirks_overrides\datums\quirks\good_quirks.dm"
 #include "modular_skyrat\master_files\code\modules\quirks_overrides\datums\quirks\negative_quirks.dm"
 #include "modular_skyrat\master_files\code\modules\quirks_overrides\datums\quirks\neutral_quirks.dm"
-#include "modular_skyrat\master_files\code\modules\reagents\blood_pack.dm"
 #include "modular_skyrat\master_files\code\modules\reagents\bottle.dm"
 #include "modular_skyrat\master_files\code\modules\reagents\chemistry\colors.dm"
 #include "modular_skyrat\master_files\code\modules\reagents\chemistry\holder.dm"

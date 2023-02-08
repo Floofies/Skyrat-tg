@@ -133,7 +133,7 @@
 	var/obj/item/organ/internal/tongue/dog/new_tongue = new(get_turf(human_holder))
 	new_tongue.Insert(human_holder)
 
-/ uncontrollable laughter
+// uncontrollable laughter
 /datum/quirk/item_quirk/joker
 	name = "Pseudobulbar Affect"
 	desc = "At random intervals, you suffer uncontrollable bursts of laughter."

@@ -31,7 +31,7 @@
  * * new_holder - The mob to add this quirk to.
  * * quirk_transfer - If this is being added to the holder as part of a quirk transfer. Quirks can use this to decide not to spawn new items or apply any other one-time effects.
  */
-/datum/quirk/add_to_holder(mob/living/new_holder, quirk_transfer)
+/datum/quirk/add_to_holder(mob/living/new_holder, quirk_transfer, client_source)
 	if(!species_quirks || !ishuman(new_holder))
 		// No species Quirks, or if mob isn't Human (lacks Species Datum).
 		// Add Quirk as-is.
@@ -51,7 +51,7 @@
 		sub_quirk.species_quirks = null
 
 		qdel(src)
-		return sub_quirk.add_to_holder(new_holder, quirk_transfer)
+		return sub_quirk.add_to_holder(new_holder, quirk_transfer, client_source)
 
 	// No Species Datum matched the Quirk holder's Species Datum.
 	// Add Quirk as-is without detouring.
